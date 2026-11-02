@@ -1,0 +1,18 @@
+package org.bashaer.bashaerfoundationcharity.model;
+
+public class ProcessingFeeCoveredDecorator extends DonationDecorator {
+    public ProcessingFeeCoveredDecorator(Donation decoratedDonation) {
+        super(decoratedDonation);
+    }
+
+    @Override
+    public double getAmount() {
+        // Adds a 3% processing fee coverage to the total donation amount
+        return decoratedDonation.getAmount() * 1.03;
+    }
+
+    @Override
+    public String getDonationType() {
+        return decoratedDonation.getDonationType() + " [Fee Covered by Donor]";
+    }
+}
