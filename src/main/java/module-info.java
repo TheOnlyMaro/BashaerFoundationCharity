@@ -7,5 +7,6 @@ module org.bashaer.bashaerfoundationcharity {
     requires java.sql;
 
     opens org.bashaer.bashaerfoundationcharity to javafx.fxml;
+    opens org.bashaer.bashaerfoundationcharity.controller to javafx.fxml;
     exports org.bashaer.bashaerfoundationcharity;
 }
