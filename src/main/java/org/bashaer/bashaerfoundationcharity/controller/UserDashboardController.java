@@ -94,7 +94,7 @@ public class UserDashboardController {
             String type = donationTypeCombo.getValue();
             String category = categoryCombo.getValue();
 
-            if (name == null || name.trim().isEmpty() || type == null || category == null) {
+              if (!anonymousCheckBox.isSelected() && (name == null || name.trim().isEmpty())){
                 statusLabel.setText("Error: Please fill in all required fields (including Category).");
                 return;
             }
