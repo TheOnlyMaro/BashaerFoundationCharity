@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="10.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.bashaer.bashaerfoundationcharity.controller.VolunteerController"
+      style="-fx-padding: 20;" prefWidth="450" prefHeight="400" VBox.vgrow="ALWAYS">
+
+    <Label text="Volunteer Notification Portal" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="volunteerNameField" promptText="Enter Your Volunteer Name"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <ComboBox fx:id="subscribeCategoryCombo" promptText="Select Category to Subscribe" prefWidth="200"/>
+        <Button text="Subscribe" onAction="#handleSubscribe" style="-fx-background-color: #2b7a78; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Label text="Live Notification Log:" style="-fx-font-weight: bold;"/>
+    <TextArea fx:id="notificationArea" prefHeight="200" editable="false" promptText="Waiting for event updates..." VBox.vgrow="ALWAYS"/>
+
+</VBox>

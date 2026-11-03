@@ -9,10 +9,11 @@ module org.bashaer.bashaerfoundationcharity {
     opens org.bashaer.bashaerfoundationcharity.model to javafx.base;
     opens org.bashaer.bashaerfoundationcharity to javafx.fxml;
 
+    exports org.bashaer.bashaerfoundationcharity.dao;
     opens org.bashaer.bashaerfoundationcharity.controller to javafx.fxml;
-    exports org.bashaer.bashaerfoundationcharity;
     opens org.bashaer.bashaerfoundationcharity.pattern.factory to javafx.base;
     opens org.bashaer.bashaerfoundationcharity.pattern.decorator to javafx.base;
     opens org.bashaer.bashaerfoundationcharity.pattern.strategy to javafx.base;
     opens org.bashaer.bashaerfoundationcharity.pattern.observer to javafx.base;
+    exports org.bashaer.bashaerfoundationcharity;
 }

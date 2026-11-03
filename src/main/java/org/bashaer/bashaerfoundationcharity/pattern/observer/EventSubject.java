@@ -3,29 +3,18 @@ package org.bashaer.bashaerfoundationcharity.pattern.observer;
 import java.util.Observable;
 
 public class EventSubject extends Observable {
-    private String eventName;
-    private String status;
+    private final String categoryName;
 
-    public EventSubject(String eventName) {
-        this.eventName = eventName;
-        this.status = "Upcoming";
+    public EventSubject(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public void setStatus(String newStatus) {
-        this.status = newStatus;
-
-        // CRITICAL: java.util.Observable requires setChanged() to be called first!
+    public void triggerUpdate(String message) {
         setChanged();
-
-        // Notify all registered observers and pass the message
-        notifyObservers("Event '" + eventName + "' status changed to: " + status);
+        notifyObservers(message);
     }
 
-    public String getEventName() {
-        return eventName;
-    }
-
-    public String getStatus() {
-        return status;
+    public String getCategoryName() {
+        return categoryName;
     }
 }
