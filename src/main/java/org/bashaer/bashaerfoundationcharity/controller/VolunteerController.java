@@ -21,7 +21,6 @@ public class VolunteerController {
     }
 
     @FXML
-        @FXML
     protected void handleSubscribeCategoryClick(){
         loadCategories();
     }
