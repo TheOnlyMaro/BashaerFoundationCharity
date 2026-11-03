@@ -1,4 +1,6 @@
-package org.bashaer.bashaerfoundationcharity.model;
+package org.bashaer.bashaerfoundationcharity.pattern.decorator;
+
+import org.bashaer.bashaerfoundationcharity.model.Donation;
 
 public class ProcessingFeeCoveredDecorator extends DonationDecorator {
     public ProcessingFeeCoveredDecorator(Donation decoratedDonation) {
@@ -13,6 +15,6 @@ public class ProcessingFeeCoveredDecorator extends DonationDecorator {
 
     @Override
     public String getDonationType() {
-        return decoratedDonation.getDonationType() + " [Fee Covered by Donor]";
+        return decoratedDonation.getDonationType();
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.bashaer.bashaerfoundationcharity.controller.MainDashboardController"
+      prefHeight="550" prefWidth="750" style="-fx-padding: 10;">
+
+    <!-- App Header -->
+    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 10; -fx-background-color: #2b7a78;">
+        <Label text="Bashaer Foundation Management System"
+               style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+    </HBox>
+
+
+    <!-- Multi-Role Portals using TabPane -->
+    <TabPane fx:id="portalTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+        <!-- Tab 1: Donor Control Panel -->
+        <Tab text="Donor Portal">
+            <fx:include source="user_dashboard.fxml"/>
+        </Tab>
+
+        <!-- Tab 2: Event Manager Portal (Observer Pattern Demo) -->
+        <Tab text="Event Manager Portal">
+            <fx:include source="event_dashboard.fxml"/>
+        </Tab>
+
+        <!-- Tab 3: CRUD Lookup Tables -->
+        <Tab text="Category Management (CRUD)">
+            <fx:include source="lookup_view.fxml"/>
+        </Tab>
+
+    </TabPane>
+</VBox>

@@ -1,4 +1,4 @@
-package org.bashaer.bashaerfoundationcharity.model;
+package org.bashaer.bashaerfoundationcharity.pattern.observer;
 
 import java.util.Observer;
 import java.util.Observable;

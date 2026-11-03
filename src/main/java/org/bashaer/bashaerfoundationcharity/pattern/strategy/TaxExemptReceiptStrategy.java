@@ -1,4 +1,6 @@
-package org.bashaer.bashaerfoundationcharity.model;
+package org.bashaer.bashaerfoundationcharity.pattern.strategy;
+
+import org.bashaer.bashaerfoundationcharity.model.Donation;
 
 public class TaxExemptReceiptStrategy implements ReceiptStrategy {
     @Override

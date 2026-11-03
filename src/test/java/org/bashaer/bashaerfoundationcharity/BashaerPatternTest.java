@@ -1,6 +1,13 @@
 package org.bashaer.bashaerfoundationcharity;
 
 import org.bashaer.bashaerfoundationcharity.model.*;
+import org.bashaer.bashaerfoundationcharity.pattern.decorator.ProcessingFeeCoveredDecorator;
+import org.bashaer.bashaerfoundationcharity.pattern.factory.DonationFactory;
+import org.bashaer.bashaerfoundationcharity.pattern.observer.EventSubject;
+import org.bashaer.bashaerfoundationcharity.pattern.observer.VolunteerObserver;
+import org.bashaer.bashaerfoundationcharity.pattern.strategy.ReceiptStrategy;
+import org.bashaer.bashaerfoundationcharity.pattern.strategy.StandardReceiptStrategy;
+import org.bashaer.bashaerfoundationcharity.pattern.strategy.TaxExemptReceiptStrategy;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,12 +15,12 @@ class BashaerPatternTest {
 
     @Test
     void testDonationFactory() {
-        Donation monetary = DonationFactory.createDonation("monetary", 500.0, "Omar", null);
+        Donation monetary = DonationFactory.createDonation("monetary", 500.0, "Omar", null, 0);
         assertNotNull(monetary);
         assertEquals("Monetary Funds", monetary.getDonationType());
         assertEquals(500.0, monetary.getAmount());
 
-        Donation inKind = DonationFactory.createDonation("inkind", 0.0, "Fatma", "Winter Blankets");
+        Donation inKind = DonationFactory.createDonation("inkind", 0.0, "Fatma", "Winter Blankets", 10);
         assertNotNull(inKind);
         assertTrue(inKind.getDonationType().contains("Winter Blankets"));
     }

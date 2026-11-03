@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
-<VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml"
+<VBox spacing="12.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.bashaer.bashaerfoundationcharity.controller.UserDashboardController"
-      style="-fx-padding: 30;">
+      style="-fx-padding: 25;" prefWidth="500">
 
-    <!-- Logo with proper image nested tag -->
-    <ImageView fx:id="logoView" fitHeight="60" fitWidth="60" preserveRatio="true">
-        <image>
-            <Image url="@../images/logo.png"/>
-        </image>
-    </ImageView>
+    <Label text="Donor Portal - Contributions &amp; Modifiers" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-    <Label text="Bashaer Foundation - User Control Panel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <TextField fx:id="donorNameField" promptText="Donor Full Name"/>
+    <TextField fx:id="amountField" promptText="Monetary Value / Estimated Value ($)"/>
 
-    <TextField fx:id="donorNameField" promptText="Enter Donor Name"/>
-    <TextField fx:id="amountField" promptText="Enter Donation Amount"/>
+    <!-- Donation Type Selection -->
+    <ComboBox fx:id="donationTypeCombo" promptText="Select Donation Type" prefWidth="300"/>
 
-    <ComboBox fx:id="donationTypeCombo" promptText="Select Donation Type"/>
+    <!-- Conditional In-Kind Description (No quantity column stored in DB) -->
+    <VBox fx:id="inKindBox" spacing="10" managed="false" visible="false">
+        <TextField fx:id="itemDescriptionField" promptText="Item Description (e.g., Winter Blankets)"/>
+        <TextField fx:id="quantityField" promptText="Quantity (e.g., 50)"/>
+    </VBox>
 
-    <Button text="Submit Donation (Factory / Strategy)" onAction="#handleSubmitDonation" style="-fx-background-color: #2b7a78; -fx-text-fill: white;"/>
+    <!-- Decorator Checkboxes -->
+    <CheckBox fx:id="anonymousCheckBox" text="Make Donation Anonymous"/>
+    <CheckBox fx:id="processingFeeCheckBox" text="Cover 3% Processing Fee (Monetary only)"/>
+    <CheckBox fx:id="logisticsFeeCheckBox" text="Add $15 Logistics Fee (In-Kind only)"/>
 
-    <Label fx:id="statusLabel" text=""/>
+    <!-- Strategy Selection -->
+    <ComboBox fx:id="receiptStrategyCombo" promptText="Select Receipt Format" prefWidth="300"/>
+
+    <Button text="Submit &amp; Save Donation" onAction="#handleSubmitDonation"
+            style="-fx-background-color: #2b7a78; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <!-- Status & Receipt Preview -->
+    <Label fx:id="statusLabel" text="" style="-fx-font-weight: bold; -fx-text-fill: #2b7a78;"/>
+    <TextArea fx:id="receiptArea" promptText="Generated receipt preview..." prefHeight="120" editable="false"/>
+
 </VBox>
