@@ -10,12 +10,17 @@
     <Label text="Donor Portal - Contributions &amp; Modifiers" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
     <TextField fx:id="donorNameField" promptText="Donor Full Name"/>
-    <TextField fx:id="amountField" promptText="Monetary Value / Estimated Value ($)"/>
 
     <!-- Donation Type Selection -->
     <ComboBox fx:id="donationTypeCombo" promptText="Select Donation Type" prefWidth="300"/>
 
-    <!-- Conditional In-Kind Description (No quantity column stored in DB) -->
+    <!-- Category ComboBox (Fetches open categories from DB) -->
+    <ComboBox fx:id="categoryCombo" promptText="Select Donation Category" prefWidth="300" onMouseClicked="#handleCategoryClick"/>
+
+    <!-- Value/Amount Field (Hidden by default until Monetary is chosen) -->
+    <TextField fx:id="amountField" promptText="Monetary Value ($)" visible="false" managed="false"/>
+
+    <!-- Conditional In-Kind Fields -->
     <VBox fx:id="inKindBox" spacing="10" managed="false" visible="false">
         <TextField fx:id="itemDescriptionField" promptText="Item Description (e.g., Winter Blankets)"/>
         <TextField fx:id="quantityField" promptText="Quantity (e.g., 50)"/>

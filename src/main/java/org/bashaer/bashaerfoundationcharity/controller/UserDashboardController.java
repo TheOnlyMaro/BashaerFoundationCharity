@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.bashaer.bashaerfoundationcharity.dao.DonationDao;
+import org.bashaer.bashaerfoundationcharity.dao.LookupDao;
 import org.bashaer.bashaerfoundationcharity.model.*;
 import org.bashaer.bashaerfoundationcharity.pattern.decorator.AnonymousDonorDecorator;
 import org.bashaer.bashaerfoundationcharity.pattern.decorator.LogisticsFeeDecorator;
@@ -17,6 +18,7 @@ public class UserDashboardController {
     @FXML private TextField donorNameField;
     @FXML private TextField amountField;
     @FXML private ComboBox<String> donationTypeCombo;
+    @FXML private ComboBox<String> categoryCombo;
 
     @FXML private VBox inKindBox;
     @FXML private TextField itemDescriptionField;
@@ -36,7 +38,12 @@ public class UserDashboardController {
         receiptStrategyCombo.getItems().addAll("Standard Receipt", "Tax-Exempt Official Receipt");
         receiptStrategyCombo.getSelectionModel().selectFirst();
 
-        // Default state: Hide type-specific UI elements initially
+        // Load open categories from the DB Lookup DAO
+        loadCategories();
+
+        // Default state: Hide type-specific and value fields initially
+        amountField.setVisible(false);
+        amountField.setManaged(false);
         anonymousCheckBox.setVisible(false);
         anonymousCheckBox.setManaged(false);
         processingFeeCheckBox.setVisible(false);
@@ -50,15 +57,13 @@ public class UserDashboardController {
             boolean isInKind = "InKind".equals(newVal);
             boolean isSelected = newVal != null;
 
-            // In-Kind box visibility
             inKindBox.setVisible(isInKind);
             inKindBox.setManaged(isInKind);
 
-            // Remove/hide amount field when choosing In-Kind
+            // Show amount field ONLY when Monetary is chosen
             amountField.setVisible(isMonetary);
             amountField.setManaged(isMonetary);
 
-            // Checkbox visibility based on selection
             anonymousCheckBox.setVisible(isSelected);
             anonymousCheckBox.setManaged(isSelected);
 
@@ -70,14 +75,27 @@ public class UserDashboardController {
         });
     }
 
+    private void loadCategories() {
+        categoryCombo.getItems().clear();
+        for (CategoryItem item : LookupDao.getAllCategories()) {
+            categoryCombo.getItems().add(item.getName());
+        }
+    }
+
+    @FXML
+    protected void handleCategoryClick(){
+        loadCategories();
+    }
+
     @FXML
     protected void handleSubmitDonation() {
         try {
             String name = donorNameField.getText();
             String type = donationTypeCombo.getValue();
+            String category = categoryCombo.getValue();
 
-            if (name == null || name.trim().isEmpty() || type == null) {
-                statusLabel.setText("Error: Please fill in all required fields.");
+            if (name == null || name.trim().isEmpty() || type == null || category == null) {
+                statusLabel.setText("Error: Please fill in all required fields (including Category).");
                 return;
             }
 
@@ -91,35 +109,32 @@ public class UserDashboardController {
                     qty = Integer.parseInt(quantityField.getText());
                 } catch (NumberFormatException ignored) {}
 
-                donation = new InKindDonation(0.0, name, desc != null ? desc : "General Items", qty);
+                donation = DonationFactory.createDonation("in_kind", 0.0, name, desc != null ? desc : "General Items", qty);
             } else {
                 baseAmount = Double.parseDouble(amountField.getText());
                 donation = DonationFactory.createDonation("monetary", baseAmount, name, null, 1);
             }
 
-            // 2. DECORATOR PATTERN: Anonymous wrapper
+            // Decorators
             if (anonymousCheckBox.isSelected()) {
                 donation = new AnonymousDonorDecorator(donation);
             }
-
-            // 3. DECORATOR PATTERN: Fee modifiers
             if ("Monetary".equals(type) && processingFeeCheckBox.isSelected()) {
                 donation = new ProcessingFeeCoveredDecorator(donation);
             } else if ("InKind".equals(type) && logisticsFeeCheckBox.isSelected()) {
                 donation = new LogisticsFeeDecorator(donation);
             }
 
-            // 4. STRATEGY PATTERN: Receipt Generation
             ReceiptStrategy strategy = "Tax-Exempt Official Receipt".equals(receiptStrategyCombo.getValue())
                     ? new TaxExemptReceiptStrategy()
                     : new StandardReceiptStrategy();
 
             String receiptOutput = strategy.generateReceipt(donation);
 
-            // 5. DATABASE PERSISTENCE
-            DonationDao.saveDonation(donation, baseAmount);
+            // Database Persistence with Category
+            DonationDao.saveDonation(donation, baseAmount, category);
 
-            statusLabel.setText("Success! Saved to database.");
+            statusLabel.setText("Success! Saved to database under category: " + category);
             receiptArea.setText(receiptOutput);
 
         } catch (NumberFormatException e) {

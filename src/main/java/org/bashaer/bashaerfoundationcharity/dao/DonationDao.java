@@ -12,16 +12,17 @@ import java.sql.*;
 
 public class DonationDao {
 
-    public static void saveDonation(Donation donation, double baseAmount) {
-        String insertDonationSQL = "INSERT INTO donations (donor_name, donation_type, base_amount, amount, item_description, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+    public static void saveDonation(Donation donation, double baseAmount, String category) {
+        String insertDonationSQL = "INSERT INTO donations (donor_name, donation_type, category, base_amount, amount, item_description, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
-        // 1. Initialize Schema
+        // 1. Initialize Schema with category column
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("CREATE TABLE IF NOT EXISTS donations (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "donor_name TEXT NOT NULL, " +
                     "donation_type TEXT NOT NULL, " +
+                    "category TEXT, " +
                     "base_amount REAL NOT NULL, " +
                     "amount REAL NOT NULL, " +
                     "item_description TEXT, " +
@@ -50,7 +51,7 @@ public class DonationDao {
             e.printStackTrace();
         }
 
-        // 2. UNWRAP DECORATORS to find base InKindDonation metadata
+        // 2. Unwrap Decorators to extract In-Kind metadata
         Donation baseDonation = donation;
         while (baseDonation instanceof DonationDecorator) {
             baseDonation = ((DonationDecorator) baseDonation).getDecoratedDonation();
@@ -66,14 +67,15 @@ public class DonationDao {
             quantity = inKind.getQuantity();
         }
 
-        // 3. Insert Core Donation Record (donation_type is strictly "Monetary" or "InKind")
+        // 3. Insert Core Donation Record with Category
         try (PreparedStatement pstmt = conn.prepareStatement(insertDonationSQL, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, donation.getDonorName());
-            pstmt.setString(2, donation.getDonationType()); // Pure type
-            pstmt.setDouble(3, baseAmount);
-            pstmt.setDouble(4, donation.getAmount());
-            pstmt.setString(5, itemDesc);
-            pstmt.setInt(6, quantity);
+            pstmt.setString(2, donation.getDonationType());
+            pstmt.setString(3, category);
+            pstmt.setDouble(4, baseAmount);
+            pstmt.setDouble(5, donation.getAmount());
+            pstmt.setString(6, itemDesc);
+            pstmt.setInt(7, quantity);
             pstmt.executeUpdate();
 
             try (ResultSet rs = pstmt.getGeneratedKeys()) {
@@ -81,7 +83,7 @@ public class DonationDao {
                     donationId = rs.getInt(1);
                 }
             }
-            System.out.println("Donation saved successfully with ID: " + donationId);
+            System.out.println("Donation saved successfully under category: " + category);
         } catch (SQLException e) {
             System.err.println("Failed to save donation: " + e.getMessage());
             return;
@@ -134,6 +136,7 @@ public class DonationDao {
                 System.out.println("ID: " + rs.getInt("id") +
                         ", Donor: " + rs.getString("donor_name") +
                         ", Type: " + rs.getString("donation_type") +
+                        ", Category: " + rs.getString("category") +
                         ", Qty: " + rs.getInt("quantity") +
                         ", Desc: " + (rs.getString("item_description") != null ? rs.getString("item_description") : "N/A") +
                         ", Final: $" + rs.getDouble("amount") +

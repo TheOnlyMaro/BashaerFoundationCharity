@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="12.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.bashaer.bashaerfoundationcharity.controller.LookupController"
+      style="-fx-padding: 25;">
+
+    <Label text="Donation Categories Management (CRUD Lookups)" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <!-- Table to View Data -->
+    <TableView fx:id="categoryTable" prefHeight="220" prefWidth="450">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="colName" text="Category Name" prefWidth="170"/>
+            <TableColumn fx:id="colDesc" text="Description" prefWidth="220"/>
+        </columns>
+    </TableView>
+
+    <!-- Inputs to Create Data -->
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="nameField" promptText="New Category Name"/>
+        <TextField fx:id="descField" promptText="Description"/>
+        <Button text="Add Category" onAction="#handleAdd" style="-fx-background-color: #2b7a78; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- Button to Delete Data -->
+    <Button text="Delete Selected Category" onAction="#handleDelete" style="-fx-background-color: #e25555; -fx-text-fill: white;"/>
+
+</VBox>
