@@ -2,6 +2,7 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.bashaer.bashaerfoundationcharity.controller.MainDashboardController"
@@ -9,6 +10,11 @@
 
     <!-- App Header -->
     <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 10; -fx-background-color: #2b7a78;">
+        <ImageView fitHeight="90.0" preserveRatio="true">
+            <image>
+                <Image url="@../images/logo.png" />
+            </image>
+        </ImageView>
         <Label text="Bashaer Foundation Management System"
                style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
         <Region HBox.hgrow="ALWAYS" />
