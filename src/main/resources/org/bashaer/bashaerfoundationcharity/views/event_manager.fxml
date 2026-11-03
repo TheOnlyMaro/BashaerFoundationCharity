@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="10.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.bashaer.bashaerfoundationcharity.controller.EventManagerController"
+      style="-fx-padding: 20;" prefWidth="550" prefHeight="450">
+
+    <Label text="Events Manager Portal" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="eventTable" prefHeight="200">
+        <columns>
+            <TableColumn fx:id="idCol" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="titleCol" text="Event Title" prefWidth="180"/>
+            <TableColumn fx:id="categoryCol" text="Category" prefWidth="150"/>
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="titleField" promptText="New Event Title"/>
+        <ComboBox fx:id="categoryCombo" promptText="Select Category" prefWidth="150"/>
+        <Button text="Create Event" onAction="#handleCreateEvent" style="-fx-background-color: #2b7a78; -fx-text-fill: white;"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <ComboBox fx:id="statusCombo" promptText="New Status (e.g. Active, Completed)" prefWidth="200"/>
+        <Button text="Update Status &amp; Notify" onAction="#handleUpdateStatus" style="-fx-background-color: #3aafa9; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" text=""/>
+</VBox>
