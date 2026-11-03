@@ -109,7 +109,7 @@ public class UserDashboardController {
                     qty = Integer.parseInt(quantityField.getText());
                 } catch (NumberFormatException ignored) {}
 
-                donation = DonationFactory.createDonation("in_kind", 0.0, name, desc != null ? desc : "General Items", qty);
+                donation = DonationFactory.createDonation("inkind", 0.0, name, desc != null ? desc : "General Items", qty);
             } else {
                 baseAmount = Double.parseDouble(amountField.getText());
                 donation = DonationFactory.createDonation("monetary", baseAmount, name, null, 1);
