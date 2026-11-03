@@ -17,6 +17,17 @@ public class VolunteerController {
 
     @FXML
     public void initialize() {
+        loadCategories();
+    }
+
+    @FXML
+        @FXML
+    protected void handleSubscribeCategoryClick(){
+        loadCategories();
+    }
+
+    public void loadCategories() {
+        subscribeCategoryCombo.getItems().clear();
         for (CategoryItem item : LookupDao.getAllCategories()) {
             subscribeCategoryCombo.getItems().add(item.getName());
         }

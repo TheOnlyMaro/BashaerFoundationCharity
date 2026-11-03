@@ -33,6 +33,11 @@ public class EventManagerController {
         loadEvents();
     }
 
+    @FXML
+    protected void handleCategoryClick() {
+        loadCategories();
+    }
+
     private void loadCategories() {
         categoryCombo.getItems().clear();
         for (CategoryItem item : LookupDao.getAllCategories()) {

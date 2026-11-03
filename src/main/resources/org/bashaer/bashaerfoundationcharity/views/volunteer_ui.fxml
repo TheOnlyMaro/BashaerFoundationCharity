@@ -12,7 +12,7 @@
     <TextField fx:id="volunteerNameField" promptText="Enter Your Volunteer Name"/>
 
     <HBox spacing="10" alignment="CENTER">
-        <ComboBox fx:id="subscribeCategoryCombo" promptText="Select Category to Subscribe" prefWidth="200"/>
+        <ComboBox fx:id="subscribeCategoryCombo" promptText="Select Category to Subscribe" prefWidth="200" onMouseClicked="#handleSubscribeCategoryClick"/>
         <Button text="Subscribe" onAction="#handleSubscribe" style="-fx-background-color: #2b7a78; -fx-text-fill: white;"/>
     </HBox>
 
