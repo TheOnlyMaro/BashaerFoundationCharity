@@ -14,8 +14,11 @@ public class LookupDao {
         ObservableList<CategoryItem> list = FXCollections.observableArrayList();
         String sql = "SELECT * FROM donation_categories";
 
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             Statement stmt = conn.createStatement();
+        // Fetch shared singleton connection (DO NOT close 'conn')
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+
+        // Wrap ONLY Statement and ResultSet
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -34,8 +37,11 @@ public class LookupDao {
     // Create a new category
     public static void addCategory(String name, String description) {
         String sql = "INSERT INTO donation_categories (name, description) VALUES (?, ?)";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+
+        // Wrap ONLY PreparedStatement
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, description);
             pstmt.executeUpdate();
@@ -47,8 +53,11 @@ public class LookupDao {
     // Delete a category by ID
     public static void deleteCategory(int id) {
         String sql = "DELETE FROM donation_categories WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+
+        // Wrap ONLY PreparedStatement
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
