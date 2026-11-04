@@ -48,7 +48,7 @@
 
         <!-- Tab 4: CRUD Lookup Tables -->
         <Tab text="Category Management (CRUD)">
-            <fx:include source="lookup_view.fxml"/>
+            <fx:include source="category_view.fxml"/>
         </Tab>
 
     </TabPane>

@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.bashaer.bashaerfoundationcharity.dao.DonationDao;
-import org.bashaer.bashaerfoundationcharity.dao.LookupDao;
+import org.bashaer.bashaerfoundationcharity.dao.CategoryDao;
 import org.bashaer.bashaerfoundationcharity.model.*;
 import org.bashaer.bashaerfoundationcharity.pattern.decorator.AnonymousDonorDecorator;
 import org.bashaer.bashaerfoundationcharity.pattern.decorator.LogisticsFeeDecorator;
@@ -77,7 +77,7 @@ public class UserDashboardController {
 
     private void loadCategories() {
         categoryCombo.getItems().clear();
-        for (CategoryItem item : LookupDao.getAllCategories()) {
+        for (CategoryItem item : CategoryDao.getAllCategories()) {
             categoryCombo.getItems().add(item.getName());
         }
     }

@@ -3,10 +3,10 @@ package org.bashaer.bashaerfoundationcharity.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.bashaer.bashaerfoundationcharity.dao.LookupDao;
+import org.bashaer.bashaerfoundationcharity.dao.CategoryDao;
 import org.bashaer.bashaerfoundationcharity.model.CategoryItem;
 
-public class LookupController {
+public class CategoryController {
     @FXML private TableView<CategoryItem> categoryTable;
     @FXML private TableColumn<CategoryItem, Integer> colId;
     @FXML private TableColumn<CategoryItem, String> colName;
@@ -25,7 +25,7 @@ public class LookupController {
     }
 
     private void loadTableData() {
-        categoryTable.setItems(LookupDao.getAllCategories());
+        categoryTable.setItems(CategoryDao.getAllCategories());
     }
 
     @FXML
@@ -34,7 +34,7 @@ public class LookupController {
         String desc = descField.getText();
 
         if (name != null && !name.trim().isEmpty()) {
-            LookupDao.addCategory(name, desc);
+            CategoryDao.addCategory(name, desc);
             nameField.clear();
             descField.clear();
             loadTableData(); // Refresh table
@@ -45,7 +45,7 @@ public class LookupController {
     protected void handleDelete() {
         CategoryItem selected = categoryTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            LookupDao.deleteCategory(selected.getId());
+            CategoryDao.deleteCategory(selected.getId());
             loadTableData(); // Refresh table
         }
     }

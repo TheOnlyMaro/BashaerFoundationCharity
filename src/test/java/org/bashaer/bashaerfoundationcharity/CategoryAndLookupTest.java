@@ -1,6 +1,6 @@
 package org.bashaer.bashaerfoundationcharity;
 
-import org.bashaer.bashaerfoundationcharity.dao.LookupDao;
+import org.bashaer.bashaerfoundationcharity.dao.CategoryDao;
 import org.bashaer.bashaerfoundationcharity.model.CategoryItem;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public class CategoryAndLookupTest {
 
     @Test
     public void testDefaultCategoriesSeeded() {
-        List<CategoryItem> categories = LookupDao.getAllCategories();
+        List<CategoryItem> categories = CategoryDao.getAllCategories();
 
         boolean foundAnyAll = false;
         boolean foundOther = false;

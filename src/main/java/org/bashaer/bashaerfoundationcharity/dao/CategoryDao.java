@@ -7,7 +7,7 @@ import org.bashaer.bashaerfoundationcharity.model.DatabaseConnection;
 
 import java.sql.*;
 
-public class LookupDao {
+public class CategoryDao {
 
     public static ObservableList<CategoryItem> getAllCategories() {
         ObservableList<CategoryItem> list = FXCollections.observableArrayList();

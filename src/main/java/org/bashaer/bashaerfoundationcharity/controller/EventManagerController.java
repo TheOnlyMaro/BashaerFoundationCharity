@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.bashaer.bashaerfoundationcharity.dao.EventDao;
-import org.bashaer.bashaerfoundationcharity.dao.LookupDao;
+import org.bashaer.bashaerfoundationcharity.dao.CategoryDao;
 import org.bashaer.bashaerfoundationcharity.model.CategoryItem;
 import org.bashaer.bashaerfoundationcharity.pattern.observer.EventSubjectManager;
 
@@ -40,7 +40,7 @@ public class EventManagerController {
 
     private void loadCategories() {
         categoryCombo.getItems().clear();
-        for (CategoryItem item : LookupDao.getAllCategories()) {
+        for (CategoryItem item : CategoryDao.getAllCategories()) {
             categoryCombo.getItems().add(item.getName());
         }
     }

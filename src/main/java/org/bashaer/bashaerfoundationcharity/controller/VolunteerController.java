@@ -2,7 +2,7 @@ package org.bashaer.bashaerfoundationcharity.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.bashaer.bashaerfoundationcharity.dao.LookupDao;
+import org.bashaer.bashaerfoundationcharity.dao.CategoryDao;
 import org.bashaer.bashaerfoundationcharity.model.CategoryItem;
 import org.bashaer.bashaerfoundationcharity.pattern.observer.EventSubject;
 import org.bashaer.bashaerfoundationcharity.pattern.observer.EventSubjectManager;
@@ -27,7 +27,7 @@ public class VolunteerController {
 
     public void loadCategories() {
         subscribeCategoryCombo.getItems().clear();
-        for (CategoryItem item : LookupDao.getAllCategories()) {
+        for (CategoryItem item : CategoryDao.getAllCategories()) {
             subscribeCategoryCombo.getItems().add(item.getName());
         }
     }
